@@ -5,7 +5,7 @@ from .data import fill_with_dummy_values
 import click
 
 
-engine = create_engine("postgresql://admin:@localhost/hw", echo = False, future = True)
+engine = create_engine(current_app.config["SQLALCHEMY_DATABASE_URI"], echo = False, future = True)
 
 
 def get_db():
