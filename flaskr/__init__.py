@@ -10,7 +10,7 @@ def create_app(test_config=None):
     CORS(app)
     app.config.from_mapping(
         SECRET_KEY="dev",
-        SQLALCHEMY_DATABASE_URI="postgres://dlwprzunbbzgbc:43e737436d0ed1861056f6c87e5d84a0796fb50f2b5cc23eb54d9868f97ad48f@ec2-54-195-76-73.eu-west-1.compute.amazonaws.com:5432/d9pn9nac30l4hq"
+        SQLALCHEMY_DATABASE_URI="postgresql://dlwprzunbbzgbc:43e737436d0ed1861056f6c87e5d84a0796fb50f2b5cc23eb54d9868f97ad48f@ec2-54-195-76-73.eu-west-1.compute.amazonaws.com:5432/d9pn9nac30l4hq"
     )
 
     if test_config is None:

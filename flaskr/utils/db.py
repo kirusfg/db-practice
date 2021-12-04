@@ -5,12 +5,9 @@ from .data import fill_with_dummy_values
 import click
 
 
-engine = create_engine(current_app.config["SQLALCHEMY_DATABASE_URI"], echo = False, future = True)
-
-
 def get_db():
     if "db" not in g:
-        g.db = engine.connect()
+        g.db = create_engine(current_app.config["SQLALCHEMY_DATABASE_URI"], echo = False, future = True).connect()
 
     return g.db
 
@@ -31,7 +28,7 @@ def init_app(app):
 @with_appcontext
 def setup():
     conn = get_db()
-    with current_app.open_resource("schema.sql", "r") as file:
+    with current_app.open_resource("hw.sql", "r") as file:
         conn.execute(text(file.read()))
         conn.commit()
     fill_with_dummy_values()
