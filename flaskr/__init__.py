@@ -13,6 +13,11 @@ def create_app(test_config=None):
         SQLALCHEMY_DATABASE_URI="postgresql://dlwprzunbbzgbc:43e737436d0ed1861056f6c87e5d84a0796fb50f2b5cc23eb54d9868f97ad48f@ec2-54-195-76-73.eu-west-1.compute.amazonaws.com:5432/d9pn9nac30l4hq"
     )
 
+    if app.config["ENV"] != "production":
+        app.config.update(
+            SQLALCHEMY_DATABASE_URI="postgresql://admin:@localhost:5432/hw"
+        )
+
     if test_config is None:
         # load the instance config, if it exists, when not testing
         app.config.from_pyfile('config.py', silent=True)

@@ -13,6 +13,7 @@ def records():
     number = request.args["number"] if "number" in request.args else 10
     field = request.args["sortField"] if "sortField" in request.args else "disease"
     order = request.args["sortOrder"] if "sortOrder" in request.args else "asc"
+    author = request.args["author"] if "author" in request.args else None
 
     if field == "country":
         field = "R.cname"
@@ -43,22 +44,17 @@ def records():
                 JOIN Disease D ON R.disease_code = D.disease_code
                 JOIN DiseaseType DT ON D.id = DT.id
                 JOIN Discover DS ON R.disease_code = DS.disease_code
-                JOIN Users U ON R.email = U.email
-                ORDER BY {field} {order}
-                OFFSET {number} * {page}
-                LIMIT {number}"""
+                JOIN Users U ON R.email = U.email """
+    filter = f"WHERE R.email = '{author}' " if author is not None else " "
+    sorting = f"""ORDER BY {field} {order}
+                  OFFSET {number} * {page}
+                  LIMIT {number}"""
 
-    rows = conn.execute(text(query)).all()
+    rows = conn.execute(text(query + filter + sorting)).all()
 
-    query = """SELECT COUNT(*)
-               FROM Record R
-               JOIN Country C ON R.cname = C.cname
-               JOIN Disease D ON R.disease_code = D.disease_code
-               JOIN DiseaseType DT ON D.id = DT.id
-               JOIN Discover DS ON R.disease_code = DS.disease_code
-               JOIN Users U ON R.email = U.email"""
-
-    count = conn.execute(text(query)).one()[0]
+    query = f"""SELECT COUNT(*)
+                FROM Record R """
+    count = conn.execute(text(query + filter)).one()[0]
 
     records = []
     for r in rows:
