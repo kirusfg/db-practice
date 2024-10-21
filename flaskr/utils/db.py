@@ -28,7 +28,7 @@ def init_app(app):
 @with_appcontext
 def setup():
     conn = get_db()
-    with current_app.open_resource("hw.sql", "r") as file:
+    with current_app.open_resource("schema.sql", "r") as file:
         conn.execute(text(file.read()))
         conn.commit()
     fill_with_dummy_values()
