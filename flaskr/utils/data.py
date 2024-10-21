@@ -5,7 +5,7 @@ import random
 
 # Change these
 seed = 323488
-db = create_engine("postgresql+psycopg2://admin:@localhost/hw", echo = True, future = True)
+db = create_engine("postgresql+psycopg2://kirusfg:@localhost/hw", echo = True, future = True)
 
 
 random.seed(seed)
@@ -33,7 +33,7 @@ def diseases(n):
     disease_schema = Schema(schema = lambda: {
         "disease_code": dummy("uuid"),
         "pathogen": random.choice(["bacteria", "virus", "fungi"]),
-        "description": dummy("sentence"),
+        "description": dummy("word"),
     })
 
     diseases = disease_schema.create(iterations = n)

@@ -15,7 +15,7 @@ def create_app(test_config=None):
 
     if app.config["ENV"] != "production":
         app.config.update(
-            SQLALCHEMY_DATABASE_URI="postgresql://admin:@localhost:5432/hw"
+            SQLALCHEMY_DATABASE_URI="postgresql://kirusfg:@localhost:5432/hw"
         )
 
     if test_config is None:
